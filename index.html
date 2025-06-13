@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Objednávka drinku</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f8f8f8;
+    }
+    .drink {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+    h1 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Objednej si drink</h1>
+  <p id="table-info"></p>
+
+  <div id="drinks"></div>
+
+  <!-- Skrytý formulář -->
+  <form id="orderForm" action="https://formsubmit.co/TVUJ@EMAIL.CZ" method="POST" style="display:none;">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" value="Nová objednávka drinku!">
+    <input type="hidden" name="Stul" id="formTable">
+    <input type="hidden" name="Drink" id="formDrink">
+    <input type="hidden" name="Cas" id="formTime">
+  </form>
+
+  <script>
+    const drinks = [
+      { name: "Mojito", price: 120 },
+      { name: "Gin Tonic", price: 100 },
+      { name: "Negroni", price: 130 },
+      { name: "Pina Colada", price: 110 }
+    ];
+
+    const table = new URLSearchParams(window.location.search).get("stul") || "neznámý";
+    document.getElementById("table-info").innerText = `Stůl: ${table}`;
+
+    const drinksDiv = document.getElementById("drinks");
+    drinks.forEach(drink => {
+      const div = document.createElement("div");
+      div.className = "drink";
+      div.innerHTML = `<strong>${drink.name}</strong> – ${drink.price} Kč<br/>
+        <button onclick="orderDrink('${drink.name}')">Objednat</button>`;
+      drinksDiv.appendChild(div);
+    });
+
+    function orderDrink(drinkName) {
+      const now = new Date().toLocaleString();
+      document.getElementById("formTable").value = table;
+      document.getElementById("formDrink").value = drinkName;
+      document.getElementById("formTime").value = now;
+
+      alert(`Objednávka odeslána: ${drinkName} (stůl ${table})`);
+      document.getElementById("orderForm").submit();
+    }
+  </script>
+</body>
+</html>
