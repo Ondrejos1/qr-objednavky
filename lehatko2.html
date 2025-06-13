@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Objednávka – Lehátko 2</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    .drink {
+      background: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lehátko 2</h1>
+  <p>Vyber si drink a obsluha ti ho přinese.</p>
+
+  <div class="drink">
+    <strong>Mojito</strong><br/>
+    <button onclick="orderDrink('Mojito')">Objednat</button>
+  </div>
+  <div class="drink">
+    <strong>Gin Tonic</strong><br/>
+    <button onclick="orderDrink('Gin Tonic')">Objednat</button>
+  </div>
+  <div class="drink">
+    <strong>Pina Colada</strong><br/>
+    <button onclick="orderDrink('Pina Colada')">Objednat</button>
+  </div>
+
+  <form id="orderForm" action="https://formsubmit.co/ondra.polach22@gmail.com" method="POST" style="display:none;">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" value="Nová objednávka!">
+    <input type="hidden" name="Stanoviště" value="Lehátko 2">
+    <input type="hidden" name="Drink" id="formDrink">
+    <input type="hidden" name="Čas" id="formTime">
+  </form>
+
+  <script>
+    function orderDrink(drinkName) {
+      const now = new Date().toLocaleString();
+      document.getElementById("formDrink").value = drinkName;
+      document.getElementById("formTime").value = now;
+      alert(`Objednávka odeslána: ${drinkName} – Lehátko 2`);
+      document.getElementById("orderForm").submit();
+    }
+  </script>
+</body>
+</html>
